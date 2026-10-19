@@ -1,0 +1,85 @@
+{
+    "inbounds": [
+        {
+            "listen": "/etc/caddy/vmess",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$XUUID_1"
+                    },
+                    {
+                        "id": "$XUUID_2"
+                    },
+                    {
+                        "id": "$XUUID_3"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "ws",
+                "wsSettings": {
+                    "path": "VMESS_PATH"
+                }
+            }
+        },
+        {
+            "listen": "/etc/caddy/vless",
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "$VUUID_1"
+                    },
+                    {
+                        "id": "$VUUID_2"
+                    },
+                    {
+                        "id": "$VUUID_3"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "ws",
+                "wsSettings": {
+                    "path": "VLESS_PATH"
+                }
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "freedom",
+            "tag": "direct"
+        },
+        {
+            "protocol": "blackhole",
+            "tag": "blocked"
+        },
+        {
+            "protocol": "socks",
+            "tag": "sockstor",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "127.0.0.1",
+                        "port": 5098
+                    }
+                ]
+            }
+        }
+    ],
+    "routing": {
+        "domainStrategy": "AsIs",
+        "rules": [
+            {
+                "type": "field",
+                "domain": [
+                    "onion"
+                ],
+                "outboundTag": "sockstor"
+            }
+        ]
+    }
+}

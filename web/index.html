@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraSound - Premium Instrumental Stream</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            cyan: '#06b6d4',
+                            pink: '#ec4899',
+                        },
+                        dark: {
+                            base: '#07090e',
+                            surface: '#0f141f',
+                            card: '#161d2d',
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            hover: '#1e283d'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #07090e;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism utility styles */
+        .glass-panel {
+            background: rgba(15, 20, 31, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07090e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f293d;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+        }
+
+        /* Gradient Glow effects */
+        .glow-accent {
+            box-shadow: 0 0 35px -5px rgba(139, 92, 246, 0.35);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #a78bfa 0%, #06b6d4 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Range Slider styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: #a78bfa;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -4px;
+            box-shadow: 0 0 10px rgba(167, 139, 250, 0.8);
+            transition: transform 0.1s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+            background: #ffffff;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-dark-base text-gray-100 antialiased selection:bg-brand-500 selection:text-white pb-28">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-dark-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-brand-cyan to-brand-pink p-0.5 flex items-center justify-center glow-accent">
+                    <div class="w-full h-full bg-dark-base rounded-[10px] flex items-center justify-center">
+                        <i class="fa-solid font-bold fa-compact-disc text-brand-400 text-xl animate-spin" style="animation-duration: 8s;"></i>
+                    </div>
+                </div>
+                <span class="text-xl font-extrabold tracking-tight text-white">Aura<span class="text-gradient">Sound</span></span>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md hidden md:block">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search tracks, artists, or genres..." 
+                           class="w-full bg-dark-surface border border-dark-border rounded-full py-2 pl-10 pr-4 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn text-white hover:text-brand-400 transition-colors py-1 border-b-2 border-brand-500">Home</button>
+                <button onclick="switchTab('discover')" id="nav-discover" class="nav-btn text-gray-400 hover:text-brand-400 transition-colors py-1 border-b-2 border-transparent">Discover</button>
+                <button onclick="switchTab('playlists')" id="nav-playlists" class="nav-btn text-gray-400 hover:text-brand-400 transition-colors py-1 border-b-2 border-transparent">Playlists</button>
+                <button onclick="switchTab('instrumental')" id="nav-instrumental" class="nav-btn text-gray-400 hover:text-brand-400 transition-colors py-1 border-b-2 border-transparent">Instrumental Hub</button>
+                <button onclick="switchTab('about')" id="nav-about" class="nav-btn text-gray-400 hover:text-brand-400 transition-colors py-1 border-b-2 border-transparent">About</button>
+            </nav>
+
+            <!-- User Actions & Profile -->
+            <div class="flex items-center gap-3">
+                <button class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-brand-600 to-brand-cyan hover:from-brand-500 hover:to-brand-400 text-white text-xs font-semibold px-4 py-2 rounded-full transition-all shadow-lg hover:shadow-brand-500/25">
+                    <i class="fa-solid fa-crown text-yellow-300"></i> PRO Access
+                </button>
+                
+                <div class="relative group">
+                    <button class="w-9 h-9 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gray-300 hover:text-white transition-colors">
+                        <i class="fa-solid fa-user-astronaut"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden text-gray-400 hover:text-white text-xl p-1">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-dark-border bg-dark-surface px-4 py-3 space-y-2 text-sm">
+            <input type="text" onkeyup="handleSearch()" placeholder="Search music..." class="w-full bg-dark-card border border-dark-border rounded-lg py-2 px-3 text-sm text-gray-200 mb-2 focus:outline-none">
+            <a href="#" onclick="switchTab('home')" class="block py-2 text-white font-medium">Home</a>
+            <a href="#" onclick="switchTab('discover')" class="block py-2 text-gray-400 hover:text-white">Discover</a>
+            <a href="#" onclick="switchTab('playlists')" class="block py-2 text-gray-400 hover:text-white">Playlists</a>
+            <a href="#" onclick="switchTab('instrumental')" class="block py-2 text-gray-400 hover:text-white">Instrumental Hub</a>
+            <a href="#" onclick="switchTab('about')" class="block py-2 text-gray-400 hover:text-white">About</a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex-1 w-full space-y-8">
+        
+        <!-- ================= HOME TAB ================= -->
+        <div id="tab-home" class="tab-content space-y-8">
+            
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl glass-card p-6 sm:p-10 border border-dark-border">
+                <!-- Background Ambient Gradient Glows -->
+                <div class="absolute -top-24 -left-24 w-72 h-72 bg-brand-600/30 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-80 h-80 bg-brand-cyan/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold tracking-wide">
+                            <span class="w-2 h-2 rounded-full bg-brand-cyan animate-ping"></span>
+                            FEATURED INSTRUMENTAL SPOTLIGHT
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                            Elevate Your Focus with <span class="text-gradient">Pure Audio Waves</span>
+                        </h1>
+                        <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
+                            Discover high-definition, royalty-free background instrumental soundscapes curated for deep study, relaxation, coding, and creative inspiration.
+                        </p>
+
+                        <div class="flex flex-wrap items-center gap-4 pt-2">
+                            <button onclick="playTrack(0)" class="flex items-center gap-2 bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-brand-500/40 transform hover:-translate-y-0.5">
+                                <i class="fa-solid fa-play"></i> Listen Now
+                            </button>
+                            <button onclick="switchTab('instrumental')" class="flex items-center gap-2 bg-dark-card hover:bg-dark-hover border border-dark-border text-gray-300 hover:text-white font-semibold px-6 py-3 rounded-full transition-all">
+                                <i class="fa-solid fa-compass"></i> Explore Hub
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Audio Visualizer Preview Card -->
+                    <div class="lg:col-span-5 flex flex-col items-center justify-center">
+                        <div class="w-full glass-panel rounded-2xl p-5 border border-dark-border space-y-4 shadow-2xl relative overflow-hidden">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                                </div>
+                                <span class="text-xs font-mono text-gray-400 tracking-wider">LIVE SPECTRUM VISUALIZER</span>
+                            </div>
+
+                            <!-- Visualizer Canvas -->
+                            <div class="relative h-36 w-full rounded-xl bg-dark-base/80 overflow-hidden border border-dark-border flex items-center justify-center">
+                                <canvas id="visualizerCanvas" class="w-full h-full block"></canvas>
+                                <div id="visualizerFallbackText" class="absolute text-xs text-gray-500 pointer-events-none">
+                                    Click Play to activate spectrum
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between text-xs text-gray-400">
+                                <span><i class="fa-solid fa-wave-square text-brand-cyan mr-1"></i> WebAudio Engine</span>
+                                <span class="font-mono text-brand-400">44.1 kHz / 24-bit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-brand-cyan"></i> Filter by Genre
+                    </h2>
+                    <span class="text-xs text-gray-500" id="showingTrackCount">Showing all tracks</span>
+                </div>
+
+                <!-- Chips Grid -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="genreFilterContainer">
+                    <button onclick="filterGenre('All')" class="genre-chip active border border-brand-500 bg-brand-500/20 text-white text-xs font-medium px-4 py-2 rounded-full whitespace-nowrap transition-all hover:border-brand-500">All Tracks</button>
+                    <button onclick="filterGenre('Lo-Fi')" class="genre-chip border border-dark-border bg-dark-card text-gray-400 hover:text-white text-xs font-medium px-4 py-2 rounded-full whitespace-nowrap transition-all hover:border-brand-500">Lo-Fi Beats</button>
+                    <button onclick="filterGenre('Ambient')" class="genre-chip border border-dark-border bg-dark-card text-gray-400 hover:text-white text-xs font-medium px-4 py-2 rounded-full whitespace-nowrap transition-all hover:border-brand-500">Ambient & Chill</button>
+                    <button onclick="filterGenre('Cinematic')" class="genre-chip border border-dark-border bg-dark-card text-gray-400 hover:text-white text-xs font-medium px-4 py-2 rounded-full whitespace-nowrap transition-all hover:border-brand-500">Cinematic Orchestral</button>
+                    <button onclick="filterGenre('Synthwave')" class="genre-chip border border-dark-border bg-dark-card text-gray-400 hover:text-white text-xs font-medium px-4 py-2 rounded-full whitespace-nowrap transition-all hover:border-brand-500">Retro Synthwave</button>
+                    <button onclick="filterGenre('Classical')" class="genre-chip border border-dark-border bg-dark-card text-gray-400 hover:text-white text-xs font-medium px-4 py-2 rounded-full whitespace-nowrap transition-all hover:border-brand-500">Modern Classical</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Left Track List Column -->
+                <div class="lg:col-span-8 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-white">Featured Audio Tracks</h3>
+                        <span class="text-xs text-gray-400">Click to stream instantly</span>
+                    </div>
+
+                    <!-- Track Rows Container -->
+                    <div id="trackListContainer" class="space-y-2">
+                        <!-- Rendered dynamically by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Right Side Widget Column -->
+                <div class="lg:col-span-4 space-y-6">
+                    
+                    <!-- Popular Playlists Widget -->
+                    <div class="glass-panel rounded-2xl p-5 border border-dark-border space-y-4">
+                        <h3 class="text-base font-bold text-white flex items-center justify-between">
+                            <span><i class="fa-solid fa-list-ul text-brand-pink mr-2"></i>Curated Playlists</span>
+                            <a href="#" onclick="switchTab('playlists')" class="text-xs text-brand-400 hover:underline">View All</a>
+                        </h3>
+
+                        <div class="space-y-3">
+                            <div onclick="filterGenre('Lo-Fi')" class="group p-2.5 rounded-xl bg-dark-card hover:bg-dark-hover border border-dark-border cursor-pointer flex items-center gap-3 transition-all">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-800 flex items-center justify-center text-white shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="fa-solid fa-coffee text-lg"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm font-semibold text-white truncate">Midnight Study Lo-Fi</h4>
+                                    <p class="text-xs text-gray-400 truncate">Calm beats for intense focus & chill</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-gray-500 text-xs group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                            </div>
+
+                            <div onclick="filterGenre('Ambient')" class="group p-2.5 rounded-xl bg-dark-card hover:bg-dark-hover border border-dark-border cursor-pointer flex items-center gap-3 transition-all">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-cyan-600 to-blue-800 flex items-center justify-center text-white shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="fa-solid fa-cloud-moon text-lg"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm font-semibold text-white truncate">Deep Ambient Space</h4>
+                                    <p class="text-xs text-gray-400 truncate">Atmospheric soundscapes for sleep</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-gray-500 text-xs group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                            </div>
+
+                            <div onclick="filterGenre('Cinematic')" class="group p-2.5 rounded-xl bg-dark-card hover:bg-dark-hover border border-dark-border cursor-pointer flex items-center gap-3 transition-all">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-600 to-rose-800 flex items-center justify-center text-white shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="fa-solid fa-film text-lg"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm font-semibold text-white truncate">Epic Orchestral Scores</h4>
+                                    <p class="text-xs text-gray-400 truncate">Dramatic build-ups & strings</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-gray-500 text-xs group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instrumental Mood Stats Widget -->
+                    <div class="glass-panel rounded-2xl p-5 border border-dark-border space-y-3">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-yellow-400"></i> Audio Stream Health
+                        </h3>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex justify-between text-gray-400">
+                                <span>Bitrate Quality</span>
+                                <span class="text-green-400 font-mono font-medium">320 kbps MP3</span>
+                            </div>
+                            <div class="w-full bg-dark-card rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-green-500 h-full w-full"></div>
+                            </div>
+                            
+                            <div class="flex justify-between text-gray-400 pt-2">
+                                <span>Server CDN Status</span>
+                                <span class="text-brand-cyan font-mono font-medium">Global Edge Active</span>
+                            </div>
+                            <div class="flex justify-between text-gray-400">
+                                <span>CORS Standard</span>
+                                <span class="text-gray-300 font-mono">Public Stream API</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= DISCOVER TAB ================= -->
+        <div id="tab-discover" class="tab-content hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 border border-dark-border">
+                <h2 class="text-2xl font-bold text-white mb-2">Discover New Audio Experiences</h2>
+                <p class="text-gray-400 text-sm mb-6">Explore our machine-curated selection of ambient and acoustic background compositions.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-xl bg-dark-card border border-dark-border hover:border-brand-500 transition-all cursor-pointer" onclick="filterGenre('Lo-Fi')">
+                        <div class="h-32 rounded-lg bg-gradient-to-r from-purple-900 to-indigo-900 mb-3 flex items-center justify-center">
+                            <i class="fa-solid fa-headphones text-4xl text-brand-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Daily Lo-Fi Mix</h3>
+                        <p class="text-xs text-gray-400 mt-1">24 tracks carefully mastered for continuous background listening.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-dark-card border border-dark-border hover:border-brand-500 transition-all cursor-pointer" onclick="filterGenre('Synthwave')">
+                        <div class="h-32 rounded-lg bg-gradient-to-r from-blue-900 to-cyan-900 mb-3 flex items-center justify-center">
+                            <i class="fa-solid fa-bolt text-4xl text-brand-cyan"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Retro Synth Radar</h3>
+                        <p class="text-xs text-gray-400 mt-1">Neon-infused electronic arpeggios and vintage synthesizer pads.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-dark-card border border-dark-border hover:border-brand-500 transition-all cursor-pointer" onclick="filterGenre('Classical')">
+                        <div class="h-32 rounded-lg bg-gradient-to-r from-pink-900 to-rose-900 mb-3 flex items-center justify-center">
+                            <i class="fa-solid fa-music text-4xl text-brand-pink"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Neoclassical Focus</h3>
+                        <p class="text-xs text-gray-400 mt-1">Gentle solo piano and soft string ensemble compositions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PLAYLISTS TAB ================= -->
+        <div id="tab-playlists" class="tab-content hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 border border-dark-border">
+                <h2 class="text-2xl font-bold text-white mb-4">Curated Instrumental Playlists</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4" id="playlistGrid">
+                    <!-- Dynamic playlist cards rendered by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= INSTRUMENTAL HUB TAB ================= -->
+        <div id="tab-instrumental" class="tab-content hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 border border-dark-border space-y-4">
+                <h2 class="text-2xl font-bold text-white">Instrumental Soundscape Hub</h2>
+                <p class="text-gray-400 text-sm">Select high-frequency background audio tuned to specific cognitive states.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-5 rounded-xl bg-dark-card border border-dark-border flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-brand-cyan font-mono">BETA WAVES (14-30Hz)</span>
+                            <h3 class="text-lg font-bold text-white">Deep Work & Code Flow</h3>
+                            <p class="text-xs text-gray-400">Steady rhythmic synth pulses for intense problem solving.</p>
+                        </div>
+                        <button onclick="playTrack(1)" class="w-10 h-10 rounded-full bg-brand-500 hover:bg-brand-600 flex items-center justify-center text-white shrink-0">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="p-5 rounded-xl bg-dark-card border border-dark-border flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-brand-pink font-mono">ALPHA WAVES (8-13Hz)</span>
+                            <h3 class="text-lg font-bold text-white">Relaxed Awareness</h3>
+                            <p class="text-xs text-gray-400">Warm ambient drone textures for reading and study.</p>
+                        </div>
+                        <button onclick="playTrack(2)" class="w-10 h-10 rounded-full bg-brand-500 hover:bg-brand-600 flex items-center justify-center text-white shrink-0">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= ABOUT TAB ================= -->
+        <div id="tab-about" class="tab-content hidden space-y-6">
+            <div class="glass-card rounded-2xl p-8 border border-dark-border max-w-3xl mx-auto text-center space-y-4">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-cyan mx-auto flex items-center justify-center text-white text-3xl shadow-xl">
+                    <i class="fa-solid fa-compact-disc"></i>
+                </div>
+                <h2 class="text-3xl font-extrabold text-white">About AuraSound Streaming</h2>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    AuraSound is a lightweight, modern web audio application built to deliver seamless, royalty-free background music streams across desktop and mobile devices. Engineered with pure HTML5 Canvas visualizers and low-latency audio pipelines.
+                </p>
+                <div class="pt-4 flex justify-center gap-4 text-xs text-gray-500">
+                    <span>Version 3.4.0</span> &bull; 
+                    <span>HTML5 Audio API</span> &bull; 
+                    <span>Public Domain Music Streams</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Fixed Bottom Audio Player -->
+    <div class="fixed bottom-0 left-0 right-0 z-50 glass-panel border-t border-dark-border px-4 py-3 shadow-2xl">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-6">
+            
+            <!-- Currently Playing Track Info -->
+            <div class="flex items-center gap-3 w-full sm:w-1/4">
+                <div class="relative group shrink-0">
+                    <img id="playerCover" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=150&auto=format&fit=crop&q=80" 
+                         alt="Cover Art" class="w-12 h-12 rounded-lg object-cover border border-dark-border shadow-md">
+                    <div class="absolute inset-0 bg-black/40 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-expand text-white text-xs"></i>
+                    </div>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <h4 id="playerTitle" class="text-sm font-semibold text-white truncate">Nebula Dreams</h4>
+                    <p id="playerArtist" class="text-xs text-gray-400 truncate">Aura Soundscapes</p>
+                </div>
+                <button id="likeBtn" onclick="toggleLike()" class="text-gray-500 hover:text-red-500 transition-colors p-1">
+                    <i class="fa-regular fa-heart text-base"></i>
+                </button>
+            </div>
+
+            <!-- Player Controls & Progress Bar -->
+            <div class="flex flex-col items-center gap-1.5 w-full sm:w-2/4">
+                <!-- Control Buttons -->
+                <div class="flex items-center gap-5 text-gray-300">
+                    <button id="shuffleBtn" onclick="toggleShuffle()" class="text-gray-500 hover:text-white transition-colors text-sm" title="Shuffle">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </button>
+                    <button onclick="playPrevTrack()" class="hover:text-white transition-colors text-base" title="Previous Track">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </button>
+                    <button id="mainPlayBtn" onclick="togglePlayPause()" class="w-10 h-10 rounded-full bg-white hover:bg-brand-400 text-dark-base flex items-center justify-center transition-all transform active:scale-95 shadow-lg shadow-white/10" title="Play / Pause">
+                        <i class="fa-solid fa-play text-base ml-0.5"></i>
+                    </button>
+                    <button onclick="playNextTrack()" class="hover:text-white transition-colors text-base" title="Next Track">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                    <button id="loopBtn" onclick="toggleLoop()" class="text-gray-500 hover:text-white transition-colors text-sm" title="Loop">
+                        <i class="fa-solid fa-repeat"></i>
+                    </button>
+                </div>
+
+                <!-- Timeline Bar -->
+                <div class="w-full flex items-center gap-3 text-xs text-gray-400 font-mono">
+                    <span id="currentTime">0:00</span>
+                    <input type="range" id="progressBar" min="0" max="100" value="0" step="0.1" oninput="seekAudio(this.value)" class="flex-1">
+                    <span id="totalDuration">0:00</span>
+                </div>
+            </div>
+
+            <!-- Volume & Extra Tools -->
+            <div class="hidden sm:flex items-center justify-end gap-3 w-1/4 text-gray-400">
+                <button onclick="toggleMute()" id="muteBtn" class="hover:text-white transition-colors">
+                    <i class="fa-solid fa-volume-high text-sm"></i>
+                </button>
+                <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.8" oninput="setVolume(this.value)" class="w-20">
+                <div class="h-4 w-px bg-dark-border mx-1"></div>
+                <button onclick="switchTab('instrumental')" class="hover:text-brand-400 transition-colors text-sm" title="Equalizer Mode">
+                    <i class="fa-solid fa-sliders"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Hidden Native Audio Element -->
+    <audio id="audioEngine" crossorigin="anonymous" preload="metadata"></audio>
+
+    <script>
+        // Public domain / Royalty-Free test MP3 streams for reliable playing
+        const musicLibrary = [
+            {
+                id: 0,
+                title: "Nebula Dreams (Lo-Fi)",
+                artist: "Aura Soundscapes",
+                genre: "Lo-Fi",
+                duration: "3:45",
+                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&auto=format&fit=crop&q=80",
+                plays: "142.5k"
+            },
+            {
+                id: 1,
+                title: "Cyberpunk Synthwave Pulse",
+                artist: "Neo-Tokyo Synth",
+                genre: "Synthwave",
+                duration: "7:05",
+                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+                cover: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=300&auto=format&fit=crop&q=80",
+                plays: "98.2k"
+            },
+            {
+                id: 2,
+                title: "Ethereal Ambient Stream",
+                artist: "Cosmic Resonance",
+                genre: "Ambient",
+                duration: "5:44",
+                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+                cover: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=300&auto=format&fit=crop&q=80",
+                plays: "215.1k"
+            },
+            {
+                id: 3,
+                title: "Cinematic Horizon Score",
+                artist: "Philharmonic Vanguard",
+                genre: "Cinematic",
+                duration: "5:02",
+                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+                cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&auto=format&fit=crop&q=80",
+                plays: "76.4k"
+            },
+            {
+                id: 4,
+                title: "Neoclassical Piano Nocturne",
+                artist: "Elena Rostova",
+                genre: "Classical",
+                duration: "4:12",
+                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+                cover: "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=300&auto=format&fit=crop&q=80",
+                plays: "310.9k"
+            },
+            {
+                id: 5,
+                title: "Chillhop Sunset Breeze",
+                artist: "Lo-Fi Beats Collective",
+                genre: "Lo-Fi",
+                duration: "6:18",
+                url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+                cover: "https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?w=300&auto=format&fit=crop&q=80",
+                plays: "89.0k"
+            }
+        ];
+
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        let isShuffle = false;
+        let isLoop = false;
+        let currentGenre = "All";
+        let isLiked = false;
+        let filteredTracks = [...musicLibrary];
+
+        // Audio & Visualizer references
+        const audioElement = document.getElementById('audioEngine');
+        const progressBar = document.getElementById('progressBar');
+        const currentTimeEl = document.getElementById('currentTime');
+        const totalDurationEl = document.getElementById('totalDuration');
+        const mainPlayBtn = document.getElementById('mainPlayBtn');
+        const canvas = document.getElementById('visualizerCanvas');
+        const canvasCtx = canvas.getContext('2d');
+
+        let audioCtx = null;
+        let analyser = null;
+        let sourceNode = null;
+        let visualizerAnimationId = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTracks(musicLibrary);
+            renderPlaylists();
+            loadTrack(0, false);
+            initCanvasResize();
+            
+            // Audio engine event listeners
+            audioElement.addEventListener('timeupdate', updateProgress);
+            audioElement.addEventListener('ended', onTrackEnded);
+            audioElement.addEventListener('loadedmetadata', () => {
+                totalDurationEl.textContent = formatTime(audioElement.duration || 0);
+            });
+        });
+
+        function renderTracks(tracks) {
+            const container = document.getElementById('trackListContainer');
+            document.getElementById('showingTrackCount').textContent = `Showing ${tracks.length} tracks`;
+            
+            if (tracks.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-500 glass-card rounded-xl">
+                        <i class="fa-solid fa-music-slash text-3xl mb-2"></i>
+                        <p class="text-sm">No tracks found matching your query.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = tracks.map((track, idx) => {
+                const isCurrent = track.id === musicLibrary[currentTrackIndex].id;
+                return `
+                    <div onclick="playTrackById(${track.id})" 
+                         class="group p-3 rounded-xl ${isCurrent ? 'bg-brand-500/10 border-brand-500/40' : 'bg-dark-card hover:bg-dark-hover'} border border-dark-border cursor-pointer flex items-center justify-between gap-4 transition-all">
+                        
+                        <div class="flex items-center gap-3.5 min-w-0 flex-1">
+                            <span class="text-xs font-mono w-5 text-gray-500 group-hover:text-brand-400">
+                                ${isCurrent && isPlaying ? '<i class="fa-solid fa-volume-high text-brand-cyan animate-pulse"></i>' : (idx + 1).toString().padStart(2, '0')}
+                            </span>
+                            <img src="${track.cover}" alt="${track.title}" class="w-10 h-10 rounded-lg object-cover border border-dark-border shrink-0">
+                            <div class="min-w-0 flex-1">
+                                <h4 class="text-sm font-semibold ${isCurrent ? 'text-brand-400' : 'text-white'} group-hover:text-brand-400 truncate transition-colors">${track.title}</h4>
+                                <p class="text-xs text-gray-400 truncate">${track.artist}</p>
+                            </div>
+                        </div>
+
+                        <div class="hidden sm:flex items-center gap-4 text-xs text-gray-400">
+                            <span class="px-2.5 py-1 rounded-full bg-dark-base border border-dark-border text-gray-400 font-mono">${track.genre}</span>
+                            <span class="w-16 text-right"><i class="fa-solid fa-headphones mr-1 text-gray-500"></i>${track.plays}</span>
+                            <span class="w-12 text-right font-mono">${track.duration}</span>
+                        </div>
+
+                        <button class="w-8 h-8 rounded-full bg-dark-base group-hover:bg-brand-500 text-gray-300 group-hover:text-white flex items-center justify-center transition-colors shrink-0">
+                            <i class="fa-solid ${isCurrent && isPlaying ? 'fa-pause' : 'fa-play'} text-xs"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderPlaylists() {
+            const grid = document.getElementById('playlistGrid');
+            const samplePlaylists = [
+                { title: 'Lo-Fi Chillbeats', count: '32 tracks', bg: 'from-purple-600 to-indigo-900' },
+                { title: 'Ambient Waves', count: '18 tracks', bg: 'from-cyan-600 to-blue-900' },
+                { title: 'Cinematic Score', count: '24 tracks', bg: 'from-pink-600 to-red-900' },
+                { title: 'Focus Cyberpunk', count: '40 tracks', bg: 'from-emerald-600 to-teal-900' },
+                { title: 'Classic Serenade', count: '15 tracks', bg: 'from-amber-600 to-orange-900' },
+                { title: 'Deep Sleep Drones', count: '20 tracks', bg: 'from-slate-700 to-gray-900' }
+            ];
+
+            grid.innerHTML = samplePlaylists.map(pl => `
+                <div class="p-3 rounded-xl bg-dark-card border border-dark-border hover:border-brand-500 transition-all cursor-pointer group" onclick="filterGenre('All')">
+                    <div class="h-24 rounded-lg bg-gradient-to-tr ${pl.bg} mb-2 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-music text-2xl text-white/80"></i>
+                    </div>
+                    <h4 class="text-xs font-bold text-white truncate">${pl.title}</h4>
+                    <p class="text-[10px] text-gray-400">${pl.count}</p>
+                </div>
+            `).join('');
+        }
+
+        function loadTrack(index, autoPlay = true) {
+            currentTrackIndex = index;
+            const track = musicLibrary[currentTrackIndex];
+
+            // Update UI elements
+            document.getElementById('playerCover').src = track.cover;
+            document.getElementById('playerTitle').textContent = track.title;
+            document.getElementById('playerArtist').textContent = track.artist;
+            audioElement.src = track.url;
+
+            renderTracks(filteredTracks);
+
+            if (autoPlay) {
+                playAudio();
+            }
+        }
+
+        function playTrack(index) {
+            loadTrack(index, true);
+        }
+
+        function playTrackById(id) {
+            const idx = musicLibrary.findIndex(t => t.id === id);
+            if (idx !== -1) loadTrack(idx, true);
+        }
+
+        function playAudio() {
+            initWebAudio();
+            audioElement.play().then(() => {
+                isPlaying = true;
+                updatePlayPauseButtons();
+                document.getElementById('visualizerFallbackText').classList.add('hidden');
+                startVisualizerAnimation();
+            }).catch(err => {
+                console.log("Audio play deferred or blocked:", err);
+            });
+        }
+
+        function pauseAudio() {
+            audioElement.pause();
+            isPlaying = false;
+            updatePlayPauseButtons();
+        }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                pauseAudio();
+            } else {
+                playAudio();
+            }
+        }
+
+        function updatePlayPauseButtons() {
+            mainPlayBtn.innerHTML = isPlaying 
+                ? '<i class="fa-solid fa-pause text-base"></i>' 
+                : '<i class="fa-solid fa-play text-base ml-0.5"></i>';
+            renderTracks(filteredTracks);
+        }
+
+        function playNextTrack() {
+            if (isShuffle) {
+                let nextIdx;
+                do {
+                    nextIdx = Math.floor(Math.random() * musicLibrary.length);
+                } while (nextIdx === currentTrackIndex && musicLibrary.length > 1);
+                loadTrack(nextIdx, true);
+            } else {
+                const nextIdx = (currentTrackIndex + 1) % musicLibrary.length;
+                loadTrack(nextIdx, true);
+            }
+        }
+
+        function playPrevTrack() {
+            const prevIdx = (currentTrackIndex - 1 + musicLibrary.length) % musicLibrary.length;
+            loadTrack(prevIdx, true);
+        }
+
+        function onTrackEnded() {
+            if (isLoop) {
+                audioElement.currentTime = 0;
+                playAudio();
+            } else {
+                playNextTrack();
+            }
+        }
+
+        function seekAudio(value) {
+            if (audioElement.duration) {
+                audioElement.currentTime = (value / 100) * audioElement.duration;
+            }
+        }
+
+        function updateProgress() {
+            if (audioElement.duration) {
+                const pct = (audioElement.currentTime / audioElement.duration) * 100;
+                progressBar.value = pct;
+                currentTimeEl.textContent = formatTime(audioElement.currentTime);
+            }
+        }
+
+        function setVolume(val) {
+            audioElement.volume = val;
+            const muteBtn = document.getElementById('muteBtn');
+            if (val == 0) {
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark text-sm text-red-400"></i>';
+            } else {
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-high text-sm"></i>';
+            }
+        }
+
+        function toggleMute() {
+            const volBar = document.getElementById('volumeBar');
+            if (audioElement.volume > 0) {
+                audioElement.volume = 0;
+                volBar.value = 0;
+                document.getElementById('muteBtn').innerHTML = '<i class="fa-solid fa-volume-xmark text-sm text-red-400"></i>';
+            } else {
+                audioElement.volume = 0.8;
+                volBar.value = 0.8;
+                document.getElementById('muteBtn').innerHTML = '<i class="fa-solid fa-volume-high text-sm"></i>';
+            }
+        }
+
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            const btn = document.getElementById('shuffleBtn');
+            btn.classList.toggle('text-brand-400', isShuffle);
+            btn.classList.toggle('text-gray-500', !isShuffle);
+        }
+
+        function toggleLoop() {
+            isLoop = !isLoop;
+            const btn = document.getElementById('loopBtn');
+            btn.classList.toggle('text-brand-400', isLoop);
+            btn.classList.toggle('text-gray-500', !isLoop);
+        }
+
+        function toggleLike() {
+            isLiked = !isLiked;
+            const likeBtn = document.getElementById('likeBtn');
+            likeBtn.innerHTML = isLiked 
+                ? '<i class="fa-solid fa-heart text-red-500 text-base"></i>' 
+                : '<i class="fa-regular fa-heart text-base"></i>';
+        }
+
+        function filterGenre(genre) {
+            currentGenre = genre;
+            // Update active state on chip buttons
+            const chips = document.querySelectorAll('.genre-chip');
+            chips.forEach(chip => {
+                if (chip.textContent.includes(genre) || (genre === 'All' && chip.textContent.includes('All'))) {
+                    chip.className = "genre-chip active border border-brand-500 bg-brand-500/20 text-white text-xs font-medium px-4 py-2 rounded-full whitespace-nowrap transition-all";
+                } else {
+                    chip.className = "genre-chip border border-dark-border bg-dark-card text-gray-400 hover:text-white text-xs font-medium px-4 py-2 rounded-full whitespace-nowrap transition-all hover:border-brand-500";
+                }
+            });
+
+            if (genre === 'All') {
+                filteredTracks = [...musicLibrary];
+            } else {
+                filteredTracks = musicLibrary.filter(t => t.genre.toLowerCase().includes(genre.toLowerCase()));
+            }
+            renderTracks(filteredTracks);
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            filteredTracks = musicLibrary.filter(t => 
+                t.title.toLowerCase().includes(query) || 
+                t.artist.toLowerCase().includes(query) ||
+                t.genre.toLowerCase().includes(query)
+            );
+            renderTracks(filteredTracks);
+        }
+
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Show target tab
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            // Update nav active styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-white', 'border-brand-500');
+                btn.classList.add('text-gray-400', 'border-transparent');
+            });
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-gray-400', 'border-transparent');
+                activeBtn.classList.add('text-white', 'border-brand-500');
+            }
+
+            // Close mobile menu
+            document.getElementById('mobileMenu').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        function initWebAudio() {
+            if (audioCtx) return;
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+                analyser = audioCtx.createAnalyser();
+                analyser.fftSize = 64;
+
+                sourceNode = audioCtx.createMediaElementSource(audioElement);
+                sourceNode.connect(analyser);
+                analyser.connect(audioCtx.destination);
+            } catch (e) {
+                console.log("WebAudio context initialization error or CORS restriction fallback:", e);
+            }
+        }
+
+        function initCanvasResize() {
+            const resize = () => {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            };
+            resize();
+            window.addEventListener('resize', resize);
+        }
+
+        function startVisualizerAnimation() {
+            if (visualizerAnimationId) cancelAnimationFrame(visualizerAnimationId);
+
+            const bufferLength = analyser ? analyser.frequencyBinCount : 32;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                visualizerAnimationId = requestAnimationFrame(draw);
+                const width = canvas.width;
+                const height = canvas.height;
+
+                canvasCtx.clearRect(0, 0, width, height);
+
+                if (analyser && isPlaying) {
+                    analyser.getByteFrequencyData(dataArray);
+                } else if (isPlaying) {
+                    // Fallback procedural wave when cross-origin WebAudio analyzer is restricted
+                    for (let i = 0; i < bufferLength; i++) {
+                        dataArray[i] = Math.floor(Math.sin(Date.now() * 0.005 + i * 0.2) * 60 + 100);
+                    }
+                } else {
+                    dataArray.fill(0);
+                }
+
+                const barWidth = (width / bufferLength) * 1.5;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    const barHeight = (dataArray[i] / 255) * height * 0.8;
+
+                    // Gradient for visualizer bars
+                    const gradient = canvasCtx.createLinearGradient(0, height, 0, 0);
+                    gradient.addColorStop(0, '#7c3aed');
+                    gradient.addColorStop(0.5, '#06b6d4');
+                    gradient.addColorStop(1, '#ec4899');
+
+                    canvasCtx.fillStyle = gradient;
+                    canvasCtx.fillRect(x, height - barHeight, barWidth - 2, barHeight);
+
+                    x += barWidth;
+                }
+            }
+
+            draw();
+        }
+
+        /* Helper utility for time format */
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+    </script>
+</body>
+</html>
